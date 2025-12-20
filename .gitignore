@@ -1,3 +1,10 @@
+# Arquivo do Mac
+
+.DS_Store
+
+# Abaixo daqui, o .gitignore padrão do GitHub para Python
+# -------------------------------------------------------
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
