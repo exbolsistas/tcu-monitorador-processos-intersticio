@@ -1,0 +1,23 @@
+meta {
+  name: Documento
+  type: http
+  seq: 3
+}
+
+get {
+  url: https://pesquisa.apps.tcu.gov.br/rest/publico/base/acordao-completo/documento?termo=*&filtro=KEY:{{chave-acordao}}&quantidade=1&inicio=0
+  body: none
+  auth: inherit
+}
+
+params:query {
+  termo: *
+  filtro: KEY:{{chave-acordao}}
+  quantidade: 1
+  inicio: 0
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

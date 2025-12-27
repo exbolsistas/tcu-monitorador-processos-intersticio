@@ -1,0 +1,27 @@
+{
+  "name": "tcu-monitorador-processos-intersticio",
+  "version": "0.0.1",
+  "description": "Monitorador de processos relacionados à ao não cumprimento do interstício, correspondentes à bolsas de pós graduação.",
+  "main": "src/main.ts",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "tsc && node dist/main.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bolsa",
+    "tcu",
+    "interstício",
+    "processo",
+    "cobraça",
+    "novação"
+  ],
+  "author": "Guilherme Dellagustin (dellagustin@gmail.com)",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^24.10.4",
+    "typescript": "^5.9.3"
+  }
+}

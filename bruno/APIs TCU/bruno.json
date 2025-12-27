@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "APIs TCU",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

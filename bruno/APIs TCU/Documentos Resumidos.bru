@@ -1,0 +1,22 @@
+meta {
+  name: Documentos Resumidos
+  type: http
+  seq: 2
+}
+
+get {
+  url: https://pesquisa.apps.tcu.gov.br/rest/publico/base/acordao-completo/documentosResumidos?termo=interstício bolsa&ordenacao=DTRELEVANCIA desc, NUMACORDAOINT desc&quantidade={{quantidade}}
+  body: none
+  auth: inherit
+}
+
+params:query {
+  termo: interstício bolsa
+  ordenacao: DTRELEVANCIA desc, NUMACORDAOINT desc
+  quantidade: {{quantidade}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

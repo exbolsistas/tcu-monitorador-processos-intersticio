@@ -6,7 +6,57 @@ Este documento contém notas de pesquisa das APIs do Tribunal de Contas da Uniã
 
 Seção em construção.
 
+## Referências
+
+- https://sites.tcu.gov.br/dados-abertos/webservices-tcu/#consultar-acordaos
+
 ## Histórico da pesquisa
+
+### 2025-12-27
+
+Guilherme Dellagustin:
+
+Primeira versão funcional em testes.
+
+Fatos relevantes encontrados nos testes:
+
+- Mesmo na resposta da API `documento`, os campos `QUORUM`, `ASSUNTO`, `REPRESENTANTEMP`, `SUMARIO` e `VOTO` podem ser omitidos da resposta, dependendo do tipo de acórdão e outros fatores
+- Após alguns testes, as URLs das APIs passaram a responder com uma página HTML de captcha. Aparentemente, é feito o uso de cookies para guardar o resultado de captchas, o que garante o acesso à API em um próximo acesso. Não pensei ainda em como resolver esse problema, mas pode ser um problema complicado
+- Nem todos os acórdãos incluídos na busca por "_interstício bolsa_" são referentes a bolsas de pós-graduação (e.g., `ACORDAO-COMPLETO-2692214`, `ACORDAO-COMPLETO-2674738`)
+
+Descobri também, fazendo mais testes na interface de usuário da busca do TCU, que é possível utilizar outros filtros, como na URL:
+`https://pesquisa.apps.tcu.gov.br/rest/publico/base/acordao-completo/documentosResumidos?termo=interstício bolsa&filtro=TIPOPROCESSO:"TOMADA DE CONTAS ESPECIAL" DTRELEVANCIA:[20251101 to 20251231] COPIATIPO:("ACÓRDÃO")&ordenacao=DTRELEVANCIA desc, NUMACORDAOINT desc&quantidade=20&inicio=0`
+
+Notei que os campos do filtro não diferentes do campo que temos na resposta, por exemplo, `DTRELEVANCIA` corresponde à data da seção, que na resposta é representada pelo campo `DATASESSAO`.
+
+### 2025-12-25
+
+Guilherme Dellagustin:
+
+Comecei a pesquisar sobre como criar um banco de dados em SQLite com uma aplicação em nodejs.
+Inicialmente planejava escrever em python, mas como tenho mais familiaridade com Javascript, TypeScript e o ecossistema nodejs, optei por esse caminho.
+
+Sem muito critério, comecei a desenvolver a aplicação com base na API nativa para SQLite do nodejs:
+
+- <https://betterstack.com/community/guides/scaling-nodejs/nodejs-sqlite/#building-a-book-inventory-application>
+- <https://www.javascripttutorial.net/nodejs-tutorial/nodejs-sqlite/>
+- <https://nodejs.org/api/sqlite.html>
+
+Outra alternative seria usar o módulo `sqlite3`, mas por qualquer razão, preferi testar a API nativa.
+
+### 2025-12-24
+
+Guilherme Dellagustin:
+
+Realizei os testes descritos abaixo:
+
+#### API `documentosResumidos`
+
+Tentei incluir o parâmtro `filtro` com o campo `DTATUALIZACAO` para pegar documentos atualizados mais recentemente que uma data arbitrária, mas a sintaxe observada na API `documento` é apenas para filtrar valores iguais. Experimentei com `DTATUALIZACAO > 20250101`, `DTATUALIZACAO gt 20250101` e `DTATUALIZACAO:>20250101` sem sucesso.
+
+#### API `documento`
+
+Tentei manipular os parâmetros `termo` e `quantidade` para pegar vários documentos completos em uma só chamada, mas não tive sucesso. A API sempre respondeu com apenas um documento.
 
 ### 2025-12-19
 
