@@ -25,7 +25,8 @@ async function main () {
 				const documento = respostaAPIDocumento.documentos[0];
 
 				// Passar `null` em vez de `undefined` (por isso `|| null` em campos de texto) provê melhores mensagens de erro para campos `TEXT NOT NULL`
-				// no banco de dados, e também é necessário mesmo para campos que aceitam NULL.
+				// no banco de dados, e também é necessário mesmo para campos que aceitam NULL, pois a rotina que escreve no banco de dados não aceita
+				// `undefined` como se fosse `null`.
 				const acordaoNovo: Acordao = {
 					chave: documento.KEY || null,
 					tipo: documento.TIPO || null,
@@ -41,19 +42,15 @@ async function main () {
 					situacao: documento.SITUACAO || null,
 					sumario: documento.SUMARIO || null,
 					dataAtualizacao: converteDTATUALIZACAO(documento.DTATUALIZACAO),
-					// TODO remover || ""
-					acordao: documento.ACORDAO || "", // || null,
-					// TODO remover || ""
-					assunto: documento.ASSUNTO || "", // || null,
+					acordao: documento.ACORDAO || null,
+					assunto: documento.ASSUNTO || null,
 					entidate: documento.ENTIDADE || null,
 					interessados: documento.INTERESSADOS || null,
 					quorum: documento.QUORUM || null,
-					// TODO remover || ""
-					advogado: documento.ADVOGADO || "", // || null,
+					advogado: documento.ADVOGADO || null,
 					representateMiniterioPublico: documento.REPRESENTANTEMP || null,
 					tipoDeProcesso: documento.TIPOPROCESSO || null,
-					// TODO remover || ""
-					unidadeTecnica: documento.UNIDADETECNICA  || "", // || null,
+					unidadeTecnica: documento.UNIDADETECNICA || null,
 					voto: documento.VOTO || null
 				}
 
