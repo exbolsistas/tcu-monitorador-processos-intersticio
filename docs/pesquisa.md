@@ -1,6 +1,6 @@
-# Pesquisa
+# Pesquisa e Desenvolvimento
 
-Este documento contém notas de pesquisa das APIs do Tribunal de Contas da União (TCU) e quaisquer outros aspectos técnicos necessários para monitorar, agregar e avaliar processos no TCU referentes ao não cumprimento da obrigação do interstício, no contexto de termos de compromisso de bolsas para formação e trabalho no exterior.
+Este documento contém notas de pesquisa das APIs do Tribunal de Contas da União (TCU) e quaisquer outros aspectos técnicos necessários para monitorar, agregar e avaliar processos no TCU referentes ao não cumprimento da obrigação do interstício, no contexto de termos de compromisso de bolsas para formação e trabalho no exterior. Contém também notas de desenvolvimento e uso das ferramentas.
 
 ## APIs do TCU
 
@@ -10,7 +10,7 @@ Seção em construção.
 
 - https://sites.tcu.gov.br/dados-abertos/webservices-tcu/#consultar-acordaos
 
-## Histórico da pesquisa
+## Histórico da pesquisa e desenvolvimento
 
 ### 2025-12-27
 
@@ -27,7 +27,17 @@ Fatos relevantes encontrados nos testes:
 Descobri também, fazendo mais testes na interface de usuário da busca do TCU, que é possível utilizar outros filtros, como na URL:
 `https://pesquisa.apps.tcu.gov.br/rest/publico/base/acordao-completo/documentosResumidos?termo=interstício bolsa&filtro=TIPOPROCESSO:"TOMADA DE CONTAS ESPECIAL" DTRELEVANCIA:[20251101 to 20251231] COPIATIPO:("ACÓRDÃO")&ordenacao=DTRELEVANCIA desc, NUMACORDAOINT desc&quantidade=20&inicio=0`
 
+Dessa forma, podemos já filtrar por tipo de processo (_Tomada de Contas Especial_) e também por datas de seção, para obter apenas novos acórdãos.
+
+Testes ainda são necessários para verificar se é possível também pegar acórdãos atualizados a partir de uma certa data, filtrando pelo campo `DTATUALIZACAO`
+
 Notei que os campos do filtro não diferentes do campo que temos na resposta, por exemplo, `DTRELEVANCIA` corresponde à data da seção, que na resposta é representada pelo campo `DATASESSAO`.
+
+Uma vez que a [Linguagem de definição de dados](https://pt.wikipedia.org/wiki/Linguagem_de_defini%C3%A7%C3%A3o_de_dados) de SQLite não comporta a funcionalidade de `ALTER COLUMN` (consulte <https://sqlite.org/lang_altertable.html>), não pude alterar alguns dos campos de `TEXT NOT NULL` para `TEXT` de forma fácil, então modifiquei o código para armazenar uma _string_ vazia (`""`) nesses casos. Isso já foi alterado para novas execuções, em que op banco foi alterado para permitir campos `NULL`, para os campos que não estão sempre presentes nas respostas da API `documento`.
+
+Após conseguir criar um banco de dados "completo", nesta primeira versão, usei a ferramenta DBeaver para exportar os resultados em formato CSV e realizar algumas análises. Em primeiras tentativas, ao importar o arquivo CSV no excel, macOS, caracteres como `Ó` eram importados incorretamene. Em pesquisa, descobri que o excel (do macOS?) requer que arquivos texto com _encoding_ UTF-8 rquerem um _Byte order mark_ (BOM, <https://pt.wikipedia.org/wiki/Marca_de_ordem_de_byte>). O DBeaver tem essa opção. Descobri também que o arquivo CSV resultante muitas vezes continha linhas de texto que pareciam vir de campos como `ACORDAO`. Exportei o arquivo novamente excluindo algumas colunas que tinham valores extensos em texto, o que resolveu o problema.
+
+Dessa forma, pude importar arquivo CSV no excel e realizar algumas análises básicas.
 
 ### 2025-12-25
 
