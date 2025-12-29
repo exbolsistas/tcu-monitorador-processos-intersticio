@@ -63,7 +63,8 @@ export class ClienteTCU implements IClienteTCU {
 
 		let params = new URLSearchParams({
 			termo: 'interstício bolsa',
-			ordenacao: 'DTRELEVANCIA desc, NUMACORDAOINT desc',
+			ordenacao: 'DTRELEVANCIA asc, NUMACORDAOINT desc',
+			filtro: 'TIPOPROCESSO:"TOMADA DE CONTAS ESPECIAL"',
 			quantidade: QUANTIDADE.toString(),
 		});
 

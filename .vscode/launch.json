@@ -6,8 +6,16 @@
 	"configurations": [{
 		"type": "node",
 		"request": "launch",
-		"name": "Launch Program",
+		"name": "Lança script de busca de dados na API",
 		"program": "${workspaceFolder}/src/main.mts",
+		"preLaunchTask": "tsc: build - tsconfig.json",
+		"outFiles": ["${workspaceFolder}/dist/**/*.mjs"]
+	},
+	{
+		"type": "node",
+		"request": "launch",
+		"name": "Lança script de computação de dados",
+		"program": "${workspaceFolder}/src/computa-dados.mts",
 		"preLaunchTask": "tsc: build - tsconfig.json",
 		"outFiles": ["${workspaceFolder}/dist/**/*.mjs"]
 	}]

@@ -1,17 +1,18 @@
-import { Acordao, BancoDeDadosLocal } from "./banco-de-dados-local.mjs";
-import { ClienteTCU, RespostaAPIDocumentos } from "./cliente-api-tcu.mjs";
+import { AcordaoAPI, BancoDeDadosLocal } from "./banco-de-dados-local.mjs";
+import { ClienteTCU } from "./cliente-api-tcu.mjs";
 
 async function main () {
 	try {
-		const cliente = new ClienteTCU();
+		console.log('Inicializando banco de dados...');
+		const bancoDeDadosLocal = new BancoDeDadosLocal('acordaos-tcu-intersticio.db');
+		bancoDeDadosLocal.inicializar();
+		console.log('Banco de dados inicializado com sucesso.')
 
+		const cliente = new ClienteTCU();
 		console.log('Iniciando busca de acórdãos resumidos...')
 		const respostaAPIDocumentosResumidos = await cliente.buscarDocumentosResumidos();
 
 		console.log(`Busca de acórdãos resumidos concluída com sucesso. Encontrados ${respostaAPIDocumentosResumidos.quantidadeEncontrada} acórdãos`);
-
-		const bancoDeDadosLocal = new BancoDeDadosLocal('acordaos-tcu-intersticio.db');
-		bancoDeDadosLocal.inicializar();
 
 		for(let i = 0; i < respostaAPIDocumentosResumidos.documentos.length; i++) {
 			const documentoResumido = respostaAPIDocumentosResumidos.documentos[i];
@@ -27,31 +28,31 @@ async function main () {
 				// Passar `null` em vez de `undefined` (por isso `|| null` em campos de texto) provê melhores mensagens de erro para campos `TEXT NOT NULL`
 				// no banco de dados, e também é necessário mesmo para campos que aceitam NULL, pois a rotina que escreve no banco de dados não aceita
 				// `undefined` como se fosse `null`.
-				const acordaoNovo: Acordao = {
-					chave: documento.KEY || null,
-					tipo: documento.TIPO || null,
-					titulo: documento.TITULO || null,
-					numeroAcordao: parseInt(documento.NUMACORDAO) || null,
-					anoAcordao: parseInt(documento.ANOACORDAO) || null,
-					numeroAta: documento.NUMATA || null,
-					colegiado: documento.COLEGIADO || null,
-					dataSessao: converteDATASESSAO(documento.DATASESSAO),
+				const acordaoNovo: AcordaoAPI = {
+					rapi_chave: documento.KEY || null,
+					rapi_tipo: documento.TIPO || null,
+					rapi_titulo: documento.TITULO || null,
+					rapi_numero_acordao: documento.NUMACORDAO || null,
+					rapi_ano_acordao: documento.ANOACORDAO || null,
+					rapi_numero_ata: documento.NUMATA || null,
+					rapi_colegiado: documento.COLEGIADO || null,
+					rapi_data_sessao: documento.DATASESSAO || null,
 					// O campo PROC em documento é mais "sujo" e contém um link html, em vez de apenas o número do processo
-					processo: documentoResumido.PROC || null,
-					relator: documentoResumido.RELATOR || null,
-					situacao: documento.SITUACAO || null,
-					sumario: documento.SUMARIO || null,
-					dataAtualizacao: converteDTATUALIZACAO(documento.DTATUALIZACAO),
-					acordao: documento.ACORDAO || null,
-					assunto: documento.ASSUNTO || null,
-					entidate: documento.ENTIDADE || null,
-					interessados: documento.INTERESSADOS || null,
-					quorum: documento.QUORUM || null,
-					advogado: documento.ADVOGADO || null,
-					representateMiniterioPublico: documento.REPRESENTANTEMP || null,
-					tipoDeProcesso: documento.TIPOPROCESSO || null,
-					unidadeTecnica: documento.UNIDADETECNICA || null,
-					voto: documento.VOTO || null
+					rapi_processo: documentoResumido.PROC || null,
+					rapi_relator: documentoResumido.RELATOR || null,
+					rapi_situacao: documento.SITUACAO || null,
+					rapi_sumario: documento.SUMARIO || null,
+					rapi_data_atualizacao: documento.DTATUALIZACAO || null,
+					rapi_acordao: documento.ACORDAO || null,
+					rapi_assunto: documento.ASSUNTO || null,
+					rapi_entidade: documento.ENTIDADE || null,
+					rapi_interessados: documento.INTERESSADOS || null,
+					rapi_quorum: documento.QUORUM || null,
+					rapi_advogado: documento.ADVOGADO || null,
+					rapi_representante_ministerio_publico: documento.REPRESENTANTEMP || null,
+					rapi_tipo_de_processo: documento.TIPOPROCESSO || null,
+					rapi_unidade_tecnica: documento.UNIDADETECNICA || null,
+					rapi_voto: documento.VOTO || null
 				}
 
 				bancoDeDadosLocal.insereAcordao(acordaoNovo);
@@ -65,32 +66,6 @@ async function main () {
 		console.log(e);
 		process.exit(1);
 	}
-}
-
-/**
- * 
- * @param valorDATASESSAO Data em formato de texto (string) no formato "dd-mm-aaaa"
- * @returns 
- */
-function converteDATASESSAO(valorDATASESSAO: string): number {
-	return Date.parse(
-		valorDATASESSAO.substring(6, 10) + '-' +
-		valorDATASESSAO.substring(3, 5) + '-' +
-		valorDATASESSAO.substring(0, 2)
-	);
-}
-
-/**
- * 
- * @param valorDTATUALIZACAO Data em formato de texto (string) no formato "aaaammdd"
- * @returns 
- */
-function converteDTATUALIZACAO(valorDTATUALIZACAO: string): number {
-	return Date.parse(
-		valorDTATUALIZACAO.substring(0, 4) + '-' +
-		valorDTATUALIZACAO.substring(4, 6) + '-' +
-		valorDTATUALIZACAO.substring(6, 8)
-	);
 }
 
 main();
