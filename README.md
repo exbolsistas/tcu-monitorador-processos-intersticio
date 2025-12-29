@@ -26,9 +26,14 @@ Para usar a ferramenta, siga os passos abaixo.
         ```sh
         npm ci
         ```
-2. **Uso**: Rode a ferramenta com o comando 
+2. **Uso**: 
+    1. Rode a ferramenta de busca de dados com o comando
         ```sh
         npm start
+        ```
+    2. Rode a ferramenta de computação de dadso com o comando:
+        ```sh
+        npm run computa-dados
         ```
 3. **Resultado**: A ferramenta irá criar, ou atualizar o arquivo de banco de dados SQLite `acordaos-tcu-intersticio.db` na pasta em que o comando foi rodado.
 
