@@ -7,6 +7,19 @@ e este projeto usa [Versionamento Semântico](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [0.2.0] - 2025-12-30
+
+### Adicionado
+
+- Script que computa dados a partir das respostas das APIs foi atualizado para computar o resultado do acórdão, baseado em palavras chave encontratas nos campos `SUMARIO` e `ACORDAO` (no banco, `rapi_sumario` e `rapi_acordao`). Os possíveis resultados são:
+    - `Prescrição, Arquivamento`
+    - `Sobrestamento`
+    - `Novação, Sobrestamento`
+    - `Novação, Arquivamento`
+    - `Contas Irregulares, Débito`
+    - `Contas Regulares, Quitação`
+    - `Outro`
+
 ## [0.1.0] - 2025-12-29
 
 ### Adicionado
@@ -38,6 +51,7 @@ Esta primeira versão não aplica filtros adicionais, o que acaba por armazenar 
 
 - Primeira versão da ferramenta, incluindo documentação mínima de pesquisa e uso
 
-[unreleased]: https://github.com/exbolsistas/tcu-monitorador-processos-intersticio/compare/v0.1.0...HEAD
+[unreleased]: https://github.com/exbolsistas/tcu-monitorador-processos-intersticio/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/exbolsistas/tcu-monitorador-processos-intersticio/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/exbolsistas/tcu-monitorador-processos-intersticio/compare/v0.0.1...v0.1.0
 [0.0.1]: https://github.com/exbolsistas/tcu-monitorador-processos-intersticio/releases/tag/v0.0.1

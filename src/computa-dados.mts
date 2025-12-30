@@ -11,7 +11,7 @@ function computaDadosDeAcordaos() {
 	for(let i = 0; i < acordaos.length; i ++) {
 		const acordao = acordaos[i];
 
-		// TODO: computar número do processo formatado e resultado
+		// TODO: computar número do processo formatado
 
 		const acordaoDadosComputatos: AcordaoDadosComputados = {
 			rapi_chave: acordao.rapi_chave,
@@ -24,7 +24,7 @@ function computaDadosDeAcordaos() {
 			comp_representante_ministerio_publico: computaRepresentanteMinisterioPublico(acordao.rapi_representante_ministerio_publico),
 			comp_representacao_legal: computaRepresentacaoLegal(acordao.rapi_advogado),
 			comp_revelia: computaRevelia(acordao),
-			comp_resultado: ""
+			comp_resultado: computaResultado(acordao),
 		}
 		
 		bancoDeDadosLocal.atualizaAcordaoComDadosComputados(acordaoDadosComputatos);
@@ -87,6 +87,78 @@ function computaRepresentanteMinisterioPublico(rapiRepresentanteMinisterioPublic
 	{
 		return rapiRepresentanteMinisterioPublico || "";
 	}
+}
+
+function computaResultado(acordao: Acordao): string {
+	const sumario_lowercase = acordao.rapi_sumario?.toLowerCase();
+	const acordao_lowercase = acordao.rapi_acordao?.toLowerCase();
+
+	const PRESCRICAO_ARQUIVAMENTO = "Prescrição, Arquivamento";
+	const SOBRESTAMENTO = "Sobrestamento";
+	const NOVACAO_SOBRESTAMENTO = "Novação, Sobrestamento";
+	const NOVACAO_ARQUIVAMENTO = "Novação, Arquivamento";
+	const CONTAS_IRREGULARES = "Contas Irregulares, Débito";
+	const CONTAS_REGULARES = "Contas Regulares, Quitação";
+
+	if(sumario_lowercase) {
+		if(sumario_lowercase.search('prescrição') >= 0 && sumario_lowercase.search('arquivamento') >= 0) {
+			return PRESCRICAO_ARQUIVAMENTO;
+		}
+
+		if(sumario_lowercase.search('sobrestamento') >= 0) {
+			return SOBRESTAMENTO;
+		}
+
+		if((sumario_lowercase.search('irregularidade das contas') >= 0 || sumario_lowercase.search('contas irregulares') >= 0) 
+			&& sumario_lowercase.search('débito') >= 0) {
+			return CONTAS_IRREGULARES;
+		}
+
+		if(sumario_lowercase.search('ressalva') >= 0 ) {
+			return CONTAS_REGULARES;
+		}
+	}
+	else if (acordao_lowercase) {
+		// provavelmente é um Acórdão de Relação. Por observação, estes não tem sumário.
+
+		// há um caso em que houve prescrição, porém a possibilidade de julgament ode regularidade das contas deve ter precedência em relação a prescrição
+		// consulte https://pesquisa.apps.tcu.gov.br/redireciona/acordao-completo/ACORDAO-COMPLETO-2575409 (ACÓRDÃO DE RELAÇÃO 2598/2023 - PRIMEIRA CÂMARA)
+		if(acordao_lowercase.search('ressalva') >= 0 ) {
+			return CONTAS_REGULARES;
+		}
+
+		if(acordao_lowercase.search('prescrição') >= 0 
+			&& (acordao_lowercase.search('arquivar') >= 0 || acordao_lowercase.search('arquivamento') >= 0)) {
+			return PRESCRICAO_ARQUIVAMENTO;
+		}
+
+		// Processo sobrestado devido a termo de novação assinado
+		// - (Termo de Novação, sobrestar) https://pesquisa.apps.tcu.gov.br/redireciona/acordao-completo/ACORDAO-COMPLETO-2709213
+		if(acordao_lowercase.search('termo de novação') >= 0 && acordao_lowercase.search('sobrestar') >= 0) {
+			return NOVACAO_SOBRESTAMENTO;
+		}
+
+		// arquivado devido à novação aprovada, sem o uso do termo sobrestar, sobrestamento, etc...
+		// - (Termo de Novação, arquivar) https://pesquisa.apps.tcu.gov.br/redireciona/acordao-completo/ACORDAO-COMPLETO-2726165
+		// - (Termo de Novação, arquivar) https://pesquisa.apps.tcu.gov.br/redireciona/acordao-completo/ACORDAO-COMPLETO-2724943
+		// - (Termo de Novação, arquivar) https://pesquisa.apps.tcu.gov.br/redireciona/acordao-completo/ACORDAO-COMPLETO-2729927
+		// - (Termo de Novação, arquivamento) https://pesquisa.apps.tcu.gov.br/redireciona/acordao-completo/ACORDAO-COMPLETO-2731359
+		// - (Termo de Outorga, arquivar, arquivamento) https://pesquisa.apps.tcu.gov.br/redireciona/acordao-completo/ACORDAO-COMPLETO-2728983
+		if((acordao_lowercase.search('termo de novação') >= 0 || acordao_lowercase.search('termo de outorga') >= 0)
+			&& (acordao_lowercase.search('arquivar') >= 0 || acordao_lowercase.search('arquivamento') >= 0)) {
+			return NOVACAO_ARQUIVAMENTO;
+		}
+
+		// Casos não contemplados:
+		// 1. novo prazo para apresentar proposta de novação
+		//    - https://pesquisa.apps.tcu.gov.br/redireciona/acordao-completo/ACORDAO-COMPLETO-2711778
+		// 2. arquivamento devido ao pagamento do débito 
+		//    - https://pesquisa.apps.tcu.gov.br/redireciona/acordao-completo/ACORDAO-COMPLETO-2658989
+		// consessão de novo prazo para pagamento 
+		//    - https://pesquisa.apps.tcu.gov.br/redireciona/acordao-completo/ACORDAO-COMPLETO-2667106
+	}
+
+	return "Outro";
 }
 
 computaDadosDeAcordaos();
