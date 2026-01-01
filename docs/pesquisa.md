@@ -10,6 +10,10 @@ Seção em construção.
 
 - https://sites.tcu.gov.br/dados-abertos/webservices-tcu/#consultar-acordaos
 
+## Notas Gerais
+
+1. Decodificando URLs para maior facilidade de leitura humana: é possível decodificar URLs de forma fáciel no console Node.js (que é aberto utilizando o comando `node` no terminal) com a função `decodeURI`. e.g., `decodeURI('https://pesquisa.apps.tcu.gov.br/rest/publico/base/acordao-completo/documentosResumidos?termo=interst%C3%ADcio%20bolsa&ordenacao=DTRELEVANCIA%20desc,%20NUMACORDAOINT%20desc&quantidade=20&')`.
+
 ## Histórico da pesquisa e desenvolvimento
 
 ### 2025-12-29
@@ -17,10 +21,6 @@ Seção em construção.
 Guilherme Dellagustin:
 
 Descobri hoje que no site <https://pesquisa.apps.tcu.gov.br/> também é possível pesquisar por processos (<https://pesquisa.apps.tcu.gov.br/pesquisa/processo>). As APIs por trás dessa busca e da página que mostra informações de processos ainda precisa ser explorada.
-
-https://pesquisa.apps.tcu.gov.br/rest/publico/base/processo/documento?termo=bolsa%20exterior&filtro=TIPO%3A%22Tomada%20de%20Contas%20Especial%22%20DTATUALIZACAO%3A%5B20250701%20to%2020251231%5D&ordenacao=DTAUTUACAOORDENACAO%20desc,%20NUMEROCOMZEROS%20desc&quantidade=1&inicio=0&
-Request Method
-
 
 ### 2025-12-27
 
