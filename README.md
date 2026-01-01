@@ -19,7 +19,7 @@ Para usar a ferramenta, siga os passos abaixo.
 1. **Preparação**:
     1. Clone o repitório git no seu computador, e.g., com o comando
         ```sh
-        git clone git@github.com:exbolsistas/tcu-monitorator-processos-intersticio.git`
+        git clone git@github.com:exbolsistas/tcu-monitorator-processos-intersticio.git
         ```
     2. Navegue até a pasta on foi clonado o repositório usando o seu terminal/linha de comando de preferência,
     3. Instale as dependências com o comando
