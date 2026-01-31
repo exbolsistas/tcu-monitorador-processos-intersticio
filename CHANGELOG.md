@@ -7,6 +7,10 @@ e este projeto usa [Versionamento Semântico](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Corrigido
+
+- Corrigido erro na rotina que detecta quando a API retorna uma página HTML em vez de um arquivo JSON.
+
 ## [0.2.0] - 2025-12-30
 
 ### Adicionado

@@ -72,7 +72,7 @@ export class ClienteTCU implements IClienteTCU {
 
 		const resposta = await fetch(url);
 
-		if(resposta.headers.get('content-type') === 'text/html') {
+		if(resposta.headers.get('content-type').startsWith('text/html')) {
 			throw new Error(this.MENSAGEM_ERRO_RESPONDEU_COM_HTML);
 		}
 
@@ -91,7 +91,7 @@ export class ClienteTCU implements IClienteTCU {
 
 		const resposta = await fetch(url);
 
-		if(resposta.headers.get('content-type') === 'text/html') {
+		if(resposta.headers.get('content-type').startsWith('text/html')) {
 			throw new Error(this.MENSAGEM_ERRO_RESPONDEU_COM_HTML);
 		}
 
