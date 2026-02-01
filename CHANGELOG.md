@@ -7,6 +7,10 @@ e este projeto usa [Versionamento Semântico](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Modificado
+
+- Modificada a mensagem de error que ocorre quando a API retorna com uma página HTML em vez de um arquivo JSON.
+
 ### Corrigido
 
 - Corrigido erro na rotina que detecta quando a API retorna uma página HTML em vez de um arquivo JSON.

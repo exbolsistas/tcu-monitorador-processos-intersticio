@@ -1,3 +1,5 @@
+import util from 'node:util';
+
 export interface IClienteTCU {
 	buscarDocumentosResumidos(): Promise<any>;
 	pegarDocumento(chave: string): Promise<any>;
@@ -56,7 +58,7 @@ export type RespostaAPIDocumentos = {
 
 export class ClienteTCU implements IClienteTCU {
 	private readonly URL_BASE = 'https://pesquisa.apps.tcu.gov.br/rest/publico/base/acordao-completo';
-	private readonly MENSAGEM_ERRO_RESPONDEU_COM_HTML = `A API do TCU respondeu com HTML em vez de JSON. Provavelmente o limite de acesso foi atingido, e o acesso agora requer um captcha.`;
+	private readonly FORMATO_MENSAGEM_ERRO_RESPONDEU_COM_HTML = 'A API do TCU respondeu com HTML em vez de JSON (url = %s). Provavelmente o limite de acesso foi atingido, e o acesso agora requer um captcha.';
 
 	async buscarDocumentosResumidos(): Promise<RespostaAPIDocumentosResumidos> {
 		const QUANTIDADE = 1000;
@@ -73,7 +75,7 @@ export class ClienteTCU implements IClienteTCU {
 		const resposta = await fetch(url);
 
 		if(resposta.headers.get('content-type').startsWith('text/html')) {
-			throw new Error(this.MENSAGEM_ERRO_RESPONDEU_COM_HTML);
+			throw new Error(util.format(this.FORMATO_MENSAGEM_ERRO_RESPONDEU_COM_HTML, url));
 		}
 
 		return resposta.json();
@@ -92,7 +94,7 @@ export class ClienteTCU implements IClienteTCU {
 		const resposta = await fetch(url);
 
 		if(resposta.headers.get('content-type').startsWith('text/html')) {
-			throw new Error(this.MENSAGEM_ERRO_RESPONDEU_COM_HTML);
+			throw new Error(util.format(this.FORMATO_MENSAGEM_ERRO_RESPONDEU_COM_HTML, url));
 		}
 
 		return resposta.json();
