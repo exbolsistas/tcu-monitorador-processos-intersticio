@@ -7,6 +7,8 @@ e este projeto usa [Versionamento Semântico](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [0.3.0] - 2025-02-01
+
 ### Modificado
 
 - Modificada a mensagem de error que ocorre quando a API retorna com uma página HTML em vez de um arquivo JSON.
@@ -59,7 +61,8 @@ Esta primeira versão não aplica filtros adicionais, o que acaba por armazenar 
 
 - Primeira versão da ferramenta, incluindo documentação mínima de pesquisa e uso
 
-[unreleased]: https://github.com/exbolsistas/tcu-monitorador-processos-intersticio/compare/v0.2.0...HEAD
+[unreleased]: https://github.com/exbolsistas/tcu-monitorador-processos-intersticio/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/exbolsistas/tcu-monitorador-processos-intersticio/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/exbolsistas/tcu-monitorador-processos-intersticio/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/exbolsistas/tcu-monitorador-processos-intersticio/compare/v0.0.1...v0.1.0
 [0.0.1]: https://github.com/exbolsistas/tcu-monitorador-processos-intersticio/releases/tag/v0.0.1
