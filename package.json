@@ -1,6 +1,6 @@
 {
   "name": "tcu-monitorador-processos-intersticio",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Monitorador de processos relacionados à ao não cumprimento do interstício, correspondentes à bolsas de pós graduação.",
   "main": "src/main.ts",
   "directories": {
