@@ -4,6 +4,11 @@ Este repositório foi criado para eventualmente conter ferramentas para a criaç
 
 No momento, o reposiório contém notas de pesquisa, no arquivo [docs/pequisa.md](docs/pesquisa.md), cujas informações são usadas como base para a implementação das ferramentes, e uma primeira versão da ferramenta.
 
+## Resultados
+
+> [!NOTE]
+> Link para o [Relatório preliminar da análise de acórdãos do Tribunal de Contas da União (TCU) até 2025](https://drive.google.com/file/d/138g-saLjU1JzPQEDr1H5pl16wrJmUPGq).
+
 ## Requisitos
 
 A ferramenta, na sua forma atual, requer (ou pelo menos, foi testada com) Node.js versão `24.12.0`.
