@@ -1,4 +1,4 @@
-# Análise e Monitoramento de Processos no TCU (Intersticio)
+# Análise e Monitoramento de Processos no TCU (Interstício)
 
 Este repositório foi criado para eventualmente conter ferramentas para a criação e manutenção de um banco de dados de processos de _Tomada de Contas Especial_ (TCE) no _Tribunal de Contas da União_ (TCU) referentes ao não cumprimento da obrigação do retorno e permanencia no Brasil após o fim do período de consessão de bolsas no exterior (também conhecido como interstício), e/ou não cumprimento de obrigações relacionadas.
 
