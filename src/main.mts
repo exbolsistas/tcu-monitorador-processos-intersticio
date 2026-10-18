@@ -51,7 +51,10 @@ async function main () {
 					rapi_advogado: documento.ADVOGADO || null,
 					rapi_representante_ministerio_publico: documento.REPRESENTANTEMP || null,
 					rapi_tipo_de_processo: documento.TIPOPROCESSO || null,
-					rapi_unidade_tecnica: documento.UNIDADETECNICA || null,
+					// versões anteriores do banco de dados exigiam que o campo rapi_unidade_tecnica não fosse NULL,
+					// mas em recente uso do script houve um retorno da API sem esse campo.
+					// em novas execuções do script, o campo rapi_unidade_tecnica poderá ser NULL, mas para retro compatibilidade, passamos uma string vazia em vez de NULL.
+					rapi_unidade_tecnica: documento.UNIDADETECNICA || "",
 					rapi_voto: documento.VOTO || null
 				}
 

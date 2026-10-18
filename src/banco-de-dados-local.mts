@@ -92,7 +92,7 @@ export class BancoDeDadosLocal {
 			rapi_advogado TEXT NOT NULL,
 			rapi_representante_ministerio_publico TEXT,
 			rapi_tipo_de_processo TEXT NOT NULL,
-			rapi_unidade_tecnica TEXT NOT NULL,
+			rapi_unidade_tecnica TEXT,
 			rapi_voto TEXT,
 
 			comp_numero_acordao INTEGER,
